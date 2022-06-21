@@ -185,112 +185,256 @@
 
 // Aggregation
 
-const users = [
-  {
-    id: "8o71g807b09hvd09h1",
-    firstName: "John",
-    lastName: "Smith",
-  },
-  {
-    id: "9we8rn4e98161684s9",
-    firstName: "Marcus",
-    lastName: "Davis",
-  },
-  {
-    id: "78y78t4ygd984y5c16",
-    firstName: "Anna",
-    lastName: "Rogers",
-  },
+// const users = [
+//   {
+//     id: "8o71g807b09hvd09h1",
+//     firstName: "John",
+//     lastName: "Smith",
+//   },
+//   {
+//     id: "9we8rn4e98161684s9",
+//     firstName: "Marcus",
+//     lastName: "Davis",
+//   },
+//   {
+//     id: "78y78t4ygd984y5c16",
+//     firstName: "Anna",
+//     lastName: "Rogers",
+//   },
+// ];
+
+// const banks = [
+//   {
+//     id: "8s7b4s87d4s7e7ee",
+//     name: "PrivatBank",
+//     country: "Ukraine",
+//   },
+//   {
+//     id: "df87ndre78r7ee13",
+//     name: "UniversalBank",
+//     country: "Ukraine",
+//   },
+//   {
+//     id: "28741hfhdfddsaaa",
+//     name: "Revolut",
+//     country: "UK",
+//   },
+// ];
+
+// const currencies = [
+//   {
+//     id: "127122v2",
+//     short: "UAH",
+//     full: "Ukrainian Hryvnya",
+//   },
+//   {
+//     id: "914184g4",
+//     short: "USD",
+//     full: "United States Dollar",
+//   },
+//   {
+//     id: "1981vgd4",
+//     short: "EUR",
+//     full: "Euro",
+//   },
+// ];
+
+// const payments = [
+//   {
+//     id: 1,
+//     sender: {
+//       userId: "8o71g807b09hvd09h1",
+//       bankId: "df87ndre78r7ee13",
+//       currencyId: "1981vgd4",
+//     },
+//     receiver: {
+//       userId: "9we8rn4e98161684s9",
+//       bankId: "8s7b4s87d4s7e7ee",
+//       currencyId: "127122v2",
+//     },
+//   },
+//   {
+//     id: 2,
+//     sender: {
+//       userId: "78y78t4ygd984y5c16",
+//       bankId: "28741hfhdfddsaaa",
+//       currencyId: "127122v2",
+//     },
+//     receiver: {
+//       userId: "9we8rn4e98161684s9",
+//       bankId: "28741hfhdfddsaaa",
+//       currencyId: "127122v2",
+//     },
+//   },
+// ];
+// const aggregate = (payments, users, banks, currencies) => {
+//   const payment = payments.map((object) => {
+//     object.sender["userData"] = users.find(
+//       (id) => id.id === object.sender.userId
+//     );
+//     object.receiver["userData"] = users.find(
+//       (id) => id.id === object.receiver.userId
+//     );
+
+//     object.sender["bankData"] = banks.find(
+//       (id) => id.id === object.sender.bankId
+//     );
+//     object.receiver["bankData"] = banks.find(
+//       (id) => id.id === object.receiver.bankId
+//     );
+
+//     object.sender["currencyData"] = currencies.find(
+//       (id) => id.id === object.sender.currencyId
+//     );
+//     object.receiver["currencyData"] = currencies.find(
+//       (id) => id.id === object.receiver.currencyId
+//     );
+//     return object;
+//   });
+//   return [payment];
+// };
+// console.log(aggregate(payments, users, banks, currencies));
+
+// Pizzeria
+
+// function pizzaCooking(pizzaName, ovenTime) {
+//   return new Promise(resolve => setTimeout(() => resolve(`${pizzaName} is done`), ovenTime));
+// }
+// pizzaCooking("margarita", 5400).then((message) => console.log(message)); // (should resolve in 5.4s) margarita is done
+// pizzaCooking("diabola", 3200).then((message) => console.log(message)); // (should resolve in 3.2s) diabola is done
+// console.time('pizzaCooking');
+// pizzaCooking("diabola", 3200).then(() => {console.timeEnd('pizzaCooking')})
+
+// Pizzeria 2
+
+// const orders = [
+//   { name: "margarita", ovenTime: 5400 },
+//   { name: "diabola", ovenTime: 3200 },
+//   { name: "peperoni", ovenTime: 2500 },
+// ];
+// function idealKitchen(orders) {
+//   function pizzaCooking(pizza) {
+//     return new Promise(resolve => setTimeout(() => resolve(`${pizza.name} is done`), pizza.ovenTime));
+//   }
+//   let oven = orders.map(pizza => new Promise(resolve => setTimeout(() => resolve(`${pizza.name} is done`), pizza.ovenTime)));
+//   return Promise.all(oven);
+// }
+// // should resolve in 5.4s, because all pizzas bakes in parallel, and time shouldn't add up
+// // oven1: margarita ======> 5.4
+// // oven2: diabola   ===> 3.2
+// // oven3: peperoni  ==> 2.5
+// idealKitchen(orders).then((messages) => console.log(messages)); // ['margarita is done', 'diabola is done', 'peperoni is done']
+
+// Pizzeria 3
+
+// const orders = [
+//     { name: "margarita", ovenTime: 5400 },
+//     { name: "bbq", ovenTime: 1800 },
+//     { name: "bbq", ovenTime: 1800 },
+//     { name: "margarita", ovenTime: 5400 },
+//     { name: "diabola", ovenTime: 3200 },
+//     { name: "peperoni", ovenTime: 2500 },
+//     { name: "margarita", ovenTime: 5400 },
+//     { name: "hawaiian", ovenTime: 2000 },
+//     { name: "bbq", ovenTime: 1800 },
+//     { name: "seafood", ovenTime: 2100 },
+//     { name: "peperoni", ovenTime: 2500 },
+//   ];
+
+//   async function realKitchen(ordersList, ovensNumber) {
+//     function pizzaCooking(pizza) {
+//       return new Promise(resolve => setTimeout(() => resolve(`${pizza.name} is done`), pizza.ovenTime));
+//     }
+//     const arrToMap = []
+//     let startPos = 0;
+//     let restLength = ordersList.length;
+//     for (let i = ovensNumber; i >= 1; i--) {
+//       let orderPart = ordersList.slice(startPos, Math.floor(startPos + restLength / i))
+//       arrToMap.push(orderPart)
+//       startPos = Math.floor(startPos + restLength / i)
+//       restLength = 11 - startPos
+//     }
+//     console.log(arrToMap)
+//     async function oneByOne1(arr) {
+//       const orderPromisesArr = [];
+//       for (let item of arr) {
+//         const promis = await pizzaCooking(item);
+//         orderPromisesArr.push(promis);
+//       }
+//       return orderPromisesArr;
+//     }
+//     const subProcesses = arrToMap.map(async item => await oneByOne1(item))
+//     const subResults = await Promise.all(subProcesses);
+//     return subResults.flat();
+//   }
+//   console.time("realKitchen");
+//   realKitchen(orders, 2)
+//   .then((messages) => console.log(messages))
+//   .then(() => { console.timeEnd("realKitchen") });
+
+// Pizzeria 4
+
+const orders = [
+  { name: "margarita1", ovenTime: 5400 },
+  { name: "bbq1", ovenTime: 1800 },
+  { name: "bbq2", ovenTime: 1800 },
+  { name: "margarita2", ovenTime: 5400 },
+  { name: "diabola1", ovenTime: 3200 },
+  { name: "peperoni1", ovenTime: 2500 },
+  { name: "margarita3", ovenTime: 5400 },
+  { name: "hawaiian1", ovenTime: 2000 },
+  { name: "bbq3", ovenTime: 1800 },
+  { name: "seafood1", ovenTime: 2100 },
+  { name: "peperoni2", ovenTime: 2500 },
 ];
 
-const banks = [
-  {
-    id: "8s7b4s87d4s7e7ee",
-    name: "PrivatBank",
-    country: "Ukraine",
-  },
-  {
-    id: "df87ndre78r7ee13",
-    name: "UniversalBank",
-    country: "Ukraine",
-  },
-  {
-    id: "28741hfhdfddsaaa",
-    name: "Revolut",
-    country: "UK",
-  },
-];
+async function chiefKitchen(ordersList, ovensNumber) {
+  function pizzaCooking(pizza) {
+    return new Promise((resolve) =>
+      setTimeout(() => resolve(`${pizza.name} is done`), pizza.ovenTime)
+    );
+  }
+  const arrToMap = [];
+  ordersList.sort((a, b) => a.ovenTime - b.ovenTime);
 
-const currencies = [
-  {
-    id: "127122v2",
-    short: "UAH",
-    full: "Ukrainian Hryvnya",
-  },
-  {
-    id: "914184g4",
-    short: "USD",
-    full: "United States Dollar",
-  },
-  {
-    id: "1981vgd4",
-    short: "EUR",
-    full: "Euro",
-  },
-];
+  for (let i = ovensNumber; i >= 1; i--) {
+    const amountPizza = Math.floor(ordersList.length / i);
+    const subArr = [];
 
-const payments = [
-  {
-    id: 1,
-    sender: {
-      userId: "8o71g807b09hvd09h1",
-      bankId: "df87ndre78r7ee13",
-      currencyId: "1981vgd4",
-    },
-    receiver: {
-      userId: "9we8rn4e98161684s9",
-      bankId: "8s7b4s87d4s7e7ee",
-      currencyId: "127122v2",
-    },
-  },
-  {
-    id: 2,
-    sender: {
-      userId: "78y78t4ygd984y5c16",
-      bankId: "28741hfhdfddsaaa",
-      currencyId: "127122v2",
-    },
-    receiver: {
-      userId: "9we8rn4e98161684s9",
-      bankId: "28741hfhdfddsaaa",
-      currencyId: "127122v2",
-    },
-  },
-];
-const aggregate = (payments, users, banks, currencies) => {
-  const payment = payments.map((object) => {
-    object.sender["userData"] = users.find(
-      (id) => id.id === object.sender.userId
-    );
-    object.receiver["userData"] = users.find(
-      (id) => id.id === object.receiver.userId
-    );
+    for (let n = 0; n < amountPizza; n++) {
+      if (n % 2 === 0) {
+        subArr.push(ordersList[0]);
+        ordersList.shift();
+      } else {
+        subArr.push(ordersList[ordersList.length - 1]);
+        ordersList.pop();
+      }
+    }
+    arrToMap.push(subArr);
+  }
 
-    object.sender["bankData"] = banks.find(
-      (id) => id.id === object.sender.bankId
-    );
-    object.receiver["bankData"] = banks.find(
-      (id) => id.id === object.receiver.bankId
-    );
+  async function oneByOne1(arr) {
+    const orderPromisesArr = [];
 
-    object.sender["currencyData"] = currencies.find(
-      (id) => id.id === object.sender.currencyId
-    );
-    object.receiver["currencyData"] = currencies.find(
-      (id) => id.id === object.receiver.currencyId
-    );
-    return object;
+    for (let item of arr) {
+      const promis = await pizzaCooking(item);
+      orderPromisesArr.push(promis);
+    }
+
+    return orderPromisesArr;
+  }
+
+  const subProcesses = arrToMap.map(async (item) => await oneByOne1(item));
+
+  const subResults = await Promise.all(subProcesses);
+
+  return subResults.flat();
+}
+
+console.time("chiefKitchen");
+// should resolve in max 16.9s whith 2 ovens (((
+chiefKitchen(orders, 2)
+  .then((messages) => console.log(messages)) // ['margarita is done', ...]
+  .then(() => {
+    console.timeEnd("chiefKitchen");
   });
-  return [payment];
-};
-console.log(aggregate(payments, users, banks, currencies));
